@@ -59,19 +59,14 @@ Python_zemax_draw/
 
 ### 1. 圖形介面（GUI）操作
 
-1. **安裝套件**
 
-    ```bash
-    pip install PySide6 matplotlib numpy
-    ```
-
-2. **啟動 GUI**
+1. **啟動 GUI**
 
     ```bash
     python gui_main.py
     ```
 
-3. **單檔轉換**
+2. **單檔轉換**
     - 點選「單檔轉換」分頁
     - 從下拉選單選擇資料類型（如 Chief ray angle、Distortion...）
     - 點「選擇檔案」選取欲轉換的 txt 檔
@@ -79,7 +74,7 @@ Python_zemax_draw/
     - 按「轉換」
     - 狀態列會顯示「轉換成功！」
 
-4. **批次轉換**
+3. **批次轉換**
     - 點選「批次轉換」分頁
     - 點「選擇資料夾」選取含有多個 txt 檔的資料夾
     - 點「選擇資料夾」選擇 png 輸出資料夾
