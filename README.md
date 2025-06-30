@@ -1,1 +1,0 @@
-# zemax-txt2png-gui
