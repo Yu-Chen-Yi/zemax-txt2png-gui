@@ -2,8 +2,7 @@ import os
 import sys
 import importlib
 import datetime
-import random
-import string
+
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import __config__
