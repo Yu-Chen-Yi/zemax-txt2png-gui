@@ -50,6 +50,8 @@ Python_zemax_draw/
 ├── plot_through_focus.py        # Through Focus 讀取與繪圖
 ├── input_zemax_textfile_folder/ # 放置待轉換的 txt 檔
 ├── output_meta-rosetta_pngfile_folder/ # 輸出 png 檔案資料夾
+├── image/                       # 說明文件用圖片資料夾
+│   └── gui_interface.PNG        # GUI 介面截圖
 └── README.md
 ```
 
@@ -59,6 +61,11 @@ Python_zemax_draw/
 
 ### 1. 圖形介面（GUI）操作
 
+#### 介面預覽
+
+![GUI 介面預覽](image/gui_interface.PNG)
+
+如圖所示，GUI 分為單檔轉換與批次轉換兩個分頁，操作簡單直覺。
 
 1. **啟動 GUI**
 
