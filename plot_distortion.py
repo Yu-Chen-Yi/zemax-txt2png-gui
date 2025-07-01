@@ -29,7 +29,7 @@ def read_distortion_data(file_path):
 
 
 def plot_distortion(y_angle, distortion, file_name):
-    plt.figure(figsize=__config__.pic_size)
+    plt.figure(figsize=__config__.distortion_pic_size)
     plt.plot(distortion, y_angle, color=__config__.colors[1], linewidth=2.5, label='Distortion')
     plt.ylabel('Y Angle (deg)', fontsize=__config__.ylabel_size)
     plt.xlabel('Distortion (%)', fontsize=__config__.xlabel_size)

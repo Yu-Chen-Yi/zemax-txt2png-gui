@@ -36,6 +36,26 @@ def read_cra_data(file_path):
                     continue
     return np.array(img_h), np.array(r1)
 
+def plot_cra(img_h, r1, file_name):
+    plt.figure(figsize=__config__.pic_size)
+    plt.plot(img_h, r1, 'bo-', linewidth=2, markersize=6, label='R1')
+    plt.xlabel('Image Height (mm)', fontsize=__config__.xlabel_size)
+    plt.ylabel('Chief ray angle (deg)', fontsize=__config__.ylabel_size)
+    plt.title('Image Height vs CRA', fontsize=__config__.title_size, fontweight='bold')
+    plt.grid(True, linestyle='--', alpha=0.7)
+    plt.legend(fontsize=__config__.legend_size)
+    plt.tight_layout()
+    plt.xticks(fontsize=__config__.xticks_size)
+    plt.yticks(fontsize=__config__.yticks_size)
+    ax = plt.gca()
+    ax.tick_params(width=2, length=8)
+    for spine in ax.spines.values():
+        spine.set_linewidth(2)
+    plt.legend(fontsize=__config__.legend_size)
+    plt.savefig(f'{file_name}.png', dpi=300)
+    #plt.show()
+    plt.close()
+
 if __name__ == '__main__':
     file_path = '新煒/CRA.txt'  # 可更換為其他txt路徑
     img_h, r1 = read_cra_data(file_path)

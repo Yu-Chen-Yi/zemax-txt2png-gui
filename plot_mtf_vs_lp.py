@@ -96,6 +96,10 @@ def plot_mtf(fields, file_name):
                         color=__config__.colors[i], 
                         linestyle='-', 
                         label=f'T_{field["field"]:.3f} mm')
+                plt.plot(focal_shift, sagittal, 
+                        color=__config__.colors[i], 
+                        linestyle='--', 
+                        label=f'S_{field["field"]:.3f} mm')
     plt.xlabel('Cycles per mm (lp/mm)', fontsize=__config__.xlabel_size)
     plt.ylabel('MTF', fontsize=__config__.ylabel_size)
     plt.xlim(np.min(focal_shift), np.max(focal_shift))

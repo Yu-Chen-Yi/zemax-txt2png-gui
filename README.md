@@ -20,6 +20,8 @@
   - Relative Illumination
 - 圖形化操作介面（PySide6）
 - 自動命名與輸出管理
+- 自動預設輸出 png 路徑（與輸入 txt 同檔名）
+- 轉換完成時跳出視窗提示
 
 ---
 
@@ -30,7 +32,15 @@
 安裝必要套件：
 
 ```bash
-pip install PySide6 matplotlib numpy chardet
+pip install PySide6 matplotlib numpy
+```
+
+如需完整依賴，可建立 `requirements.txt`：
+
+```
+PySide6
+matplotlib
+numpy
 ```
 
 ---
@@ -51,7 +61,8 @@ Python_zemax_draw/
 ├── input_zemax_textfile_folder/ # 放置待轉換的 txt 檔
 ├── output_meta-rosetta_pngfile_folder/ # 輸出 png 檔案資料夾
 ├── image/                       # 說明文件用圖片資料夾
-│   └── gui_interface.PNG        # GUI 介面截圖
+│   ├── gui_interface.PNG        # GUI 介面截圖
+│   └── icon.ico                 # 應用程式圖示
 └── README.md
 ```
 
@@ -77,9 +88,9 @@ Python_zemax_draw/
     - 點選「單檔轉換」分頁
     - 從下拉選單選擇資料類型（如 Chief ray angle、Distortion...）
     - 點「選擇檔案」選取欲轉換的 txt 檔
-    - 點「選擇位置」選擇輸出 png 的路徑
+    - 輸出 png 路徑會自動預設為同檔名（可手動修改）
     - 按「轉換」
-    - 狀態列會顯示「轉換成功！」
+    - 成功時會跳出視窗顯示輸出路徑
 
 3. **批次轉換**
     - 點選「批次轉換」分頁
@@ -100,6 +111,26 @@ Python_zemax_draw/
 3. **查看輸出**
     - 轉換後的 png 會自動存到 `output_meta-rosetta_pngfile_folder/` 下新建的資料夾（以時間命名）
     - 每個 txt 會對應一個 png
+
+---
+
+## 打包與發佈
+
+### 使用 PyInstaller 打包
+
+```bash
+pyinstaller --noconfirm --onefile --windowed --icon=image/icon.ico --add-data "image;image" --add-data "input_zemax_textfile_folder;input_zemax_textfile_folder" --add-data "output_meta-rosetta_pngfile_folder;output_meta-rosetta_pngfile_folder" gui_main.py
+```
+
+打包後的可執行檔位於 `dist/gui_main.exe`。
+
+### GitHub Release
+
+1. 前往 [GitHub 倉庫](https://github.com/Yu-Chen-Yi/zemax-txt2png-gui)
+2. 點選「Releases」→「Draft a new release」
+3. 填寫版本號、標題與說明
+4. 上傳打包好的 exe 檔案
+5. 發佈 Release
 
 ---
 

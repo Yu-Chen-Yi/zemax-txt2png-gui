@@ -61,6 +61,9 @@ class SingleFileTab(QWidget):
         path, _ = QFileDialog.getOpenFileName(self, '選擇 txt 檔', '', 'Text Files (*.txt)')
         if path:
             self.txt_path.setText(path)
+            # 自動預設 png 路徑
+            base = os.path.splitext(path)[0]
+            self.png_path.setText(base + '.png')
 
     def select_png(self):
         path, _ = QFileDialog.getSaveFileName(self, '選擇輸出 png', '', 'PNG Files (*.png)')
@@ -75,6 +78,7 @@ class SingleFileTab(QWidget):
         png_path = self.png_path.text().strip()
         if not (os.path.isfile(txt_path) and png_path):
             self.status.setText('請正確選擇 txt 檔與輸出 png 路徑')
+            QMessageBox.warning(self, '錯誤', '請正確選擇 txt 檔與輸出 png 路徑')
             return
         mod_name, read_func, _ = PLOT_MAP[key]
         try:
@@ -84,43 +88,36 @@ class SingleFileTab(QWidget):
             # 根據類型呼叫繪圖
             if key == 'Chief ray angle':
                 img_h, r1 = data
-                plt.figure(figsize=__config__.pic_size)
-                plt.plot(img_h, r1, 'bo-', linewidth=2, markersize=6, label='R1')
-                plt.xlabel('Image Height (mm)', fontsize=__config__.xlabel_size)
-                plt.ylabel('Chief ray angle (deg)', fontsize=__config__.ylabel_size)
-                plt.title('Image Height vs CRA', fontsize=__config__.title_size, fontweight='bold')
-                plt.grid(True, linestyle='--', alpha=0.7)
-                plt.legend(fontsize=__config__.legend_size)
-                plt.xticks(fontsize=__config__.xticks_size)
-                plt.yticks(fontsize=__config__.yticks_size)
-                ax = plt.gca()
-                ax.tick_params(width=2, length=8)
-                for spine in ax.spines.values():
-                    spine.set_linewidth(2)
-                plt.tight_layout()
-                plt.savefig(png_path, dpi=300)
-                plt.close()
+                mod.plot_cra(img_h, r1, png_path[:-4])
                 self.status.setText('轉換成功！')
+                QMessageBox.information(self, '完成', f'已輸出：{png_path}')
             elif key == 'Distortion':
                 y_angle, distortion = data
                 mod.plot_distortion(y_angle, distortion, png_path[:-4])
                 self.status.setText('轉換成功！')
+                QMessageBox.information(self, '完成', f'已輸出：{png_path}')
             elif key == 'MTF vs Field':
                 mod.plot_mtf_vs_field(data, png_path[:-4])
                 self.status.setText('轉換成功！')
+                QMessageBox.information(self, '完成', f'已輸出：{png_path}')
             elif key == 'MTF vs Freq':
                 mod.plot_mtf(data, png_path[:-4])
+                self.status.setText('轉換成功！')
+                QMessageBox.information(self, '完成', f'已輸出：{png_path}')
             elif key == 'Through Focus':
                 mod.plot_mtf(data, png_path[:-4])
-                self.status.setText('轉換成功！')
+                QMessageBox.information(self, '完成', f'已輸出：{png_path}')
             elif key == 'Relative Illumination':
                 y_field, rel_illum = data
                 mod.plot_ri(y_field, rel_illum, png_path)
                 self.status.setText('轉換成功！')
+                QMessageBox.information(self, '完成', f'已輸出：{png_path}')
             else:
+                QMessageBox.warning(self, '錯誤', '請選擇正確的資料類型')
                 self.status.setText('請選擇正確的資料類型')
         except Exception as e:
             self.status.setText('轉換失敗：' + str(e))
+            QMessageBox.critical(self, '失敗', f'轉換失敗：{e}')
             print(traceback.format_exc())
 
 class BatchTab(QWidget):

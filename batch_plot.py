@@ -41,24 +41,7 @@ def main():
                 if key == 'Chief ray angle':
                     img_h, r1 = data
                     out_png = os.path.join(output_dir, f'CRA_{label}.png')
-                    # 直接複製原繪圖主體
-                    import matplotlib.pyplot as plt
-                    plt.figure(figsize=__config__.pic_size)
-                    plt.plot(img_h, r1, 'bo-', linewidth=2, markersize=6, label='R1')
-                    plt.xlabel('Image Height (mm)', fontsize=__config__.xlabel_size)
-                    plt.ylabel('Chief ray angle (deg)', fontsize=__config__.ylabel_size)
-                    plt.title('Image Height vs CRA', fontsize=__config__.title_size, fontweight='bold')
-                    plt.grid(True, linestyle='--', alpha=0.7)
-                    plt.legend(fontsize=__config__.legend_size)
-                    plt.xticks(fontsize=__config__.xticks_size)
-                    plt.yticks(fontsize=__config__.yticks_size)
-                    ax = plt.gca()
-                    ax.tick_params(width=2, length=8)
-                    for spine in ax.spines.values():
-                        spine.set_linewidth(2)
-                    plt.tight_layout()
-                    plt.savefig(out_png, dpi=300)
-                    plt.close()
+                    mod.plot_cra(img_h, r1, out_png[:-4])
                 elif key == 'Distortion':
                     y_angle, distortion = data
                     out_png = os.path.join(output_dir, f'Dist_{label}.png')
